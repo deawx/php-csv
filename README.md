@@ -13,7 +13,7 @@ PHPCsv can be easily used as follows:
 
 ```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {
@@ -25,7 +25,7 @@ foreach ($iterator as $key => $rows) {
 `$rows` has simple accessor that enables direct access to each column.
 ```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {
@@ -38,7 +38,7 @@ foreach ($iterator as $key => $rows) {
 
 ```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {

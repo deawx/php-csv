@@ -9,9 +9,9 @@ PHPCsvではそういった煩わしいものを考えないでCSVを扱うた�
 # Get started
 PHPCsvは下記のようにして簡単に利用可能です
 
-```
+```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {
@@ -21,9 +21,9 @@ foreach ($iterator as $key => $rows) {
 ```
 
 また、`$rows` は簡易的なアクセッサを持っており、各カラムにダイレクトにアクセスが可能です。
-```
+```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {
@@ -34,9 +34,9 @@ foreach ($iterator as $key => $rows) {
 
 `$rows` はIteratorを継承しており、イテレータとして扱うことも可能です。
 
-```
+```php
 <?php
-use PHPCsv;
+use PHPCsv\Reader;
 
 $iterator = new Reader('/path/to/filename');
 foreach ($iterator as $key => $rows) {
