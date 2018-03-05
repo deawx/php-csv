@@ -1,0 +1,23 @@
+{
+    "name": "memory-agape/csv",
+    "description": "Read formatted file, string and so on formats with CSV on your PHP application",
+    "homepage" : "https://portfolio.mem.ooo",
+    "type": "library",
+    "version": "0.0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "memory-agape",
+            "email": "memory.style.serv@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PHPCsv\\": "src/"
+        }
+    }
+}
