@@ -9,7 +9,15 @@ class Row
 
     public function __construct($row, array $config = [])
     {
+        $defaults = [
+            'convert_encoding' => true,
+        ];
         $this->value = $row;
+        $this->config = $config + $defaults;
+    }
+
+    public function setConfigures(array $config)
+    {
         $this->config = $config;
     }
 
@@ -22,7 +30,10 @@ class Row
     public function getValue()
     {
         $value = $this->value;
-        if ($this->config['output.supports.multibyte'] == false) {
+        if (
+            $this->config['output.supports.multibyte'] == false ||
+            $this->config['convert_encoding'] == false
+        ) {
             return $value;
         }
         $withEncodingFrom = mb_detect_encoding(

@@ -2,13 +2,13 @@
 
 namespace PHPCsv\Accessors;
 
-class StringAccessor implements AccessorInterface
+class FastStringAccessor implements AccessorInterface
 {
     use GeneralCsvMethods;
 
     public function createHandle($value)
     {
-        $temporaryHandle = fopen('php://temp', 'rw');
+        $temporaryHandle = fopen('php://memory', 'rw');
         fwrite($temporaryHandle, $value);
         rewind($temporaryHandle);
         $this->handle = $temporaryHandle;

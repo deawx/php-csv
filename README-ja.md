@@ -46,3 +46,26 @@ foreach ($iterator as $key => $rows) {
     }
 }
 ```
+
+アクセッサを変更することにより、様々なフォーマットをReaderに渡してCSVとしてパースすることができます。
+デフォルトで提供しているアクセッサは `FileAccessor`, `StringAccessor` と `FastStringAccessor` のみです。
+```php
+<?php
+use PHPCsv\Reader;
+use PHPCsv\Accessors\StringAccessor;
+
+$text = <<<EOF
+column,column2,column3,column4
+R1Value,R1Value2,R1Value3,R1Value4
+R2Value,R2Value2,R2Value3,R2Value4
+R3Value,R3Value2,R3Value3,R3Value4
+EOF;
+
+$iterator = new Reader($text, [
+    'accessor' => StringAccessor::class,
+]);
+foreach ($iterator as $key => $rows) {
+    // CSVのカラムの値を出力します。
+    var_dump((string) $rows->columnName);
+}
+```

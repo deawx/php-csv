@@ -1,4 +1,4 @@
-# About PHPCsv
+# What is PHPCsv
 PHPCsv is a CSV parser that fully helps read multibyte characters
 (e.g. Japanese) with support for internationalization.
 
@@ -46,5 +46,29 @@ foreach ($iterator as $key => $rows) {
         // Outputs value of each column
         var_dump($row);
     }
+}
+```
+
+Will change accessor, pass values to Reader class various formats with CSV and parseable it.
+PHPCsv provide `FileAccessor`, `StringAccessor` and `FastStringAccessor` only.
+
+```php
+<?php
+use PHPCsv\Reader;
+use PHPCsv\Accessors\StringAccessor;
+
+$text = <<<EOF
+column,column2,column3,column4
+R1Value,R1Value2,R1Value3,R1Value4
+R2Value,R2Value2,R2Value3,R2Value4
+R3Value,R3Value2,R3Value3,R3Value4
+EOF;
+
+$iterator = new Reader($text, [
+    'accessor' => StringAccessor::class,
+]);
+foreach ($iterator as $key => $rows) {
+    // Output column value of CSV
+    var_dump((string) $rows->columnName);
 }
 ```
