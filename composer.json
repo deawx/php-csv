@@ -1,5 +1,5 @@
 {
-    "name": "memory-agape/csv",
+    "name": "memory-agape/php-csv",
     "description": "Read formatted file, string and so on formats with CSV on your PHP application",
     "homepage" : "https://portfolio.mem.ooo",
     "type": "library",
