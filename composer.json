@@ -22,7 +22,7 @@
             "PHPCsv\\": "src/"
         }
     },
-    "suggests": {
+    "suggest": {
         "ext-mbstring": "Supports multibyte for CSV rows"
     }
 }
