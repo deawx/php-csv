@@ -49,8 +49,8 @@ foreach ($iterator as $key => $rows) {
 }
 ```
 
-Will change accessor, pass values to Reader class various formats with CSV and parseable it.
-PHPCsv provide `FileAccessor`, `StringAccessor` and `FastStringAccessor` only.
+By changing accessor, it can parse various formats as CSV with passing to Reader.
+PHPCsv only provides `FileAccessor`, `StringAccessor`, and `FastStringAccessor`.
 
 ```php
 <?php
