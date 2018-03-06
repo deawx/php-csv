@@ -1,6 +1,6 @@
 {
     "name": "memory-agape/php-csv",
-    "description": "Read formatted file, string and so on formats with CSV on your PHP application",
+    "description": "A library that can read CSV files in various formats",
     "homepage" : "https://portfolio.mem.ooo",
     "type": "library",
     "version": "0.0.1",
