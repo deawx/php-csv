@@ -54,6 +54,15 @@ class Result implements \Iterator
         return array_keys($this->rows);
     }
 
+    public function toArray()
+    {
+        $values = [];
+        foreach ($this->rows as $name => $row) {
+            $values[$name] = (string) $row;
+        }
+        return $values;
+    }
+
     public function __get($name)
     {
         return isset($this->rows[$name]) ? $this->rows[$name] : null;

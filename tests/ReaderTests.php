@@ -108,6 +108,32 @@ EOF;
 
     }
 
+    public function testToArray()
+    {
+        $test = <<<EOF
+test,test2,test3,test4
+日本語,日本語2,日本語3,日本語4
+日本語,日本語2,日本語3,日本語4
+日本語,日本語2,日本語3,日本語4
+EOF;
+
+        file_put_contents($file = stream_get_meta_data(tmpfile())['uri'], $test);
+        $iterator = new Reader($file);
+        foreach ($iterator as $key => $rows) {
+            $values = $rows->toArray();
+            $this->assertArrayHasKey('test', $values);
+            $this->assertArrayHasKey('test2', $values);
+            $this->assertArrayHasKey('test3', $values);
+            $this->assertArrayHasKey('test4', $values);
+
+
+            $this->assertContains($this->utf82sjis('日本語'), $values['test']);
+            $this->assertContains($this->utf82sjis('日本語2'), $values['test2']);
+            $this->assertContains($this->utf82sjis('日本語3'), $values['test3']);
+            $this->assertContains($this->utf82sjis('日本語4'), $values['test4']);
+        }
+    }
+
     private function utf82sjis($text)
     {
         return mb_convert_encoding($text, 'SJIS-win', 'UTF-8');

@@ -3,7 +3,7 @@
     "description": "A library that can read CSV files in various formats",
     "homepage" : "https://portfolio.mem.ooo",
     "type": "library",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "MIT",
     "authors": [
         {
