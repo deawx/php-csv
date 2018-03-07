@@ -50,7 +50,7 @@ class Reader implements \Iterator
     public function rewind()
     {
         $this->accessor->rewind();
-        if ($this->config['read_column'] == true) {
+        if ($this->config['read_column']) {
             $this->column = $this->accessor->read();
         }
         $this->position = 0;

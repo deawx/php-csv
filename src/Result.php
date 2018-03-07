@@ -47,7 +47,7 @@ class Result implements \Iterator
         $value = [];
         foreach ($this->rows as $row) {
             $row = str_replace($this->config['output.enclosure'], ($this->config['output.escape'] === null ? '' : $this->config['output.escape']) . $this->config['output.enclosure'], $row);
-            if ($this->config['output.apply.enclosure'] == false || ctype_digit($row)) {
+            if (!$this->config['output.apply.enclosure'] || ctype_digit($row)) {
                 $value[] = $row;
             } elseif (strtotime($row) !== false) {
                 $value[] = ($this->config['output.date_with_equals'] ? '=' : '') . $this->config['output.enclosure'] . $row .  $this->config['output.enclosure'];

@@ -32,15 +32,12 @@ trait GeneralCsvMethods
     public function read()
     {
         $defaultLineEncodingDetect = ini_get('auto_detect_line_endings');
-        if ($this->config['reader.line_ending.detect'] == true) {
+        if ($this->config['reader.line_ending.detect']) {
             ini_set('auto_detect_line_endings', 1);
         }
 
-        $defaultLocale = null;
-        if ($this->config['reader.supports.multibyte'] == true) {
-            $defaultLocale = \Locale::getDefault();
-            \Locale::setDefault($this->config['reader.locale'] . '.' . $this->config['reader.from_encoding']);
-        }
+        $defaultLocale = \Locale::getDefault();
+        \Locale::setDefault($this->config['reader.locale'] . '.' . $this->config['reader.from_encoding']);
 
         $line = fgetcsv(
             $this->handle,
@@ -50,15 +47,14 @@ trait GeneralCsvMethods
             $this->config['reader.escape']
         );
 
-        if ($this->config['reader.line_ending.detect'] == true) {
+        if ($this->config['reader.line_ending.detect']) {
             ini_set('auto_detect_line_endings', $defaultLineEncodingDetect);
         }
-        if ($this->config['reader.supports.multibyte'] == true) {
-            \Locale::setDefault($defaultLocale);
-        }
 
-        if ($this->config['reader.supports.multibyte'] == true) {
-            $line = array_map(function($row) {
+        \Locale::setDefault($defaultLocale);
+
+        if ($this->config['reader.supports.multibyte']) {
+            $line = array_map(function ($row) {
                 return mb_convert_encoding(
                     $row,
                     mb_internal_encoding(),

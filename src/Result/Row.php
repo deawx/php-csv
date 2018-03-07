@@ -31,8 +31,8 @@ class Row
     {
         $value = $this->value;
         if (
-            $this->config['output.supports.multibyte'] == false ||
-            $this->config['output.convert_encoding'] == false
+            !$this->config['output.supports.multibyte'] ||
+            !$this->config['output.convert_encoding']
         ) {
             return $value;
         }
