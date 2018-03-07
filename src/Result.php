@@ -36,6 +36,12 @@ class Result implements \Iterator
         }, $rows);
     }
 
+    public function setConfigures(array $config)
+    {
+        $this->config = $config + $this->config;
+        return $this;
+    }
+
     public function combine()
     {
         $value = [];
