@@ -9,13 +9,11 @@ class Row
 
     public function __construct($row, array $config = [])
     {
-        $defaults = [
-        ];
-        $this->config = $config + $defaults;
+        $this->config = $config;
         $this->value = $row;
     }
 
-    public function setConfigures(array $config = [])
+    public function setConfig(array $config = [])
     {
         $this->config = $config + $this->config;
         return $this;
@@ -36,15 +34,10 @@ class Row
         ) {
             return $value;
         }
-        $withEncodingFrom = mb_detect_encoding(
-            $value,
-            implode(',', $this->config['output.charset.detect']),
-            true
-        );
         return mb_convert_encoding(
             $value,
             $this->config['output.to_encoding'],
-            $withEncodingFrom
+            implode(',', $this->config['output.charset.detect'])
         );
     }
 

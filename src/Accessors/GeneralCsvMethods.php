@@ -58,11 +58,7 @@ trait GeneralCsvMethods
                 return mb_convert_encoding(
                     $row,
                     mb_internal_encoding(),
-                    mb_detect_encoding(
-                        $row,
-                        implode(',', $this->config['reader.encoding.detect']),
-                        true
-                    )
+                    implode(',', $this->config['reader.encoding.detect'])
                 );
             }, $line);
         }
@@ -81,7 +77,7 @@ trait GeneralCsvMethods
         return $this->handle;
     }
 
-    public function setConfigures(array $config = [])
+    public function setConfig(array $config = [])
     {
         $this->config = $config + $this->config;
         return $this;

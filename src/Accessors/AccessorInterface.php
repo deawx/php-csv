@@ -25,7 +25,7 @@ interface AccessorInterface
      * @param array $config
      * @return $this
      */
-    public function setConfigures(array $config = []);
+    public function setConfig(array $config = []);
     public function readable();
     public function rewind();
 }

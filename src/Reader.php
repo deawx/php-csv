@@ -30,7 +30,7 @@ class Reader implements \Iterator
             ->createHandle($value);
     }
 
-    public function setConfigures(array $config = [])
+    public function setConfig(array $config = [])
     {
         $this->config = $config + $this->config;
         return $config;
