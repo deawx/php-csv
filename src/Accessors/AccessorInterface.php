@@ -4,6 +4,8 @@ namespace PHPCsv\Accessors;
 
 interface AccessorInterface
 {
+
+    public function __construct(array $config);
     public function read();
     public function getHandle();
 

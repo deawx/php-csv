@@ -8,34 +8,70 @@ trait GeneralCsvMethods
     private $handle = null;
     private $column = null;
 
+    public function __construct(array $config) {
+        $defaults = [
+            'reader.delimiter' => ',',
+            'reader.escape' => '\\',
+            'reader.enclosure' => '"',
+            'reader.locale' => 'ja-jp',
+            'reader.from_encoding' => 'SJIS-win',
+            'reader.supports.multibyte' => true,
+            'reader.line_ending.detect' => true,
+            'reader.encoding.detect' => [
+                'ASCII',
+                'JIS',
+                'UTF-8',
+                'CP51932',
+                'eucJP-win',
+                'SJIS-win',
+            ],
+        ];
+        $this->config = $config + $defaults;
+    }
+
     public function read()
     {
-        if ($this->config['reader.supports.multibyte'] == false) {
-            return fgetcsv(
-                $this->handle,
-                null,
-                $this->config['reader.delimiter'],
-                $this->config['reader.escape']
-            );
+        $defaultLineEncodingDetect = ini_get('auto_detect_line_endings');
+        if ($this->config['reader.line_ending.detect'] == true) {
+            ini_set('auto_detect_line_endings', 1);
         }
-        $line = fgets($this->handle);
-        $withEncodingFrom = mb_detect_encoding(
-            $line,
-            implode(',', $this->config['reader.charset.detect']),
-            true
+
+        $defaultLocale = null;
+        if ($this->config['reader.supports.multibyte'] == true) {
+            $defaultLocale = \Locale::getDefault();
+            \Locale::setDefault($this->config['reader.locale'] . '.' . $this->config['reader.from_encoding']);
+        }
+
+        $line = fgetcsv(
+            $this->handle,
+            null,
+            $this->config['reader.delimiter'],
+            $this->config['reader.enclosure'],
+            $this->config['reader.escape']
         );
-        return array_map(function($row) {
-            return mb_convert_encoding(
-                $row,
-                $this->config['reader.charset'],
-                $this->config['reader.to_encoding']
-            );
-        }, str_getcsv(
-                mb_convert_encoding($line, $this->config['reader.to_encoding'], $withEncodingFrom),
-                $this->config['reader.delimiter'],
-                $this->config['reader.escape']
-            )
-        );
+
+        if ($this->config['reader.line_ending.detect'] == true) {
+            ini_set('auto_detect_line_endings', $defaultLineEncodingDetect);
+        }
+        if ($this->config['reader.supports.multibyte'] == true) {
+            \Locale::setDefault($defaultLocale);
+        }
+
+        if ($this->config['reader.supports.multibyte'] == true) {
+            $line = array_map(function($row) {
+                return mb_convert_encoding(
+                    $row,
+                    mb_internal_encoding(),
+                    mb_detect_encoding(
+                        $row,
+                        implode(',', $this->config['reader.encoding.detect']),
+                        true
+                    )
+                );
+            }, $line);
+        }
+
+        return $line;
     }
 
     public function setHandle($handle)
@@ -51,28 +87,7 @@ trait GeneralCsvMethods
 
     public function setConfigures(array $config = [])
     {
-        $defaults = [
-            'reader.delimiter' => ',',
-            'reader.escape' => '\\',
-            'reader.supports.multibyte' => true,
-            'reader.charset' => 'UTF-8',
-            'reader.line_ending.detect' => true,
-            'reader.charset.detect' => [
-                'ASCII',
-                'JIS',
-                'UTF-8',
-                'CP51932',
-                'eucJP-win',
-                'SJIS-win',
-            ],
-            'reader.to_encoding' => 'SJIS-win',
-        ];
-
-        $this->config = $config + $defaults;
-
-        if ($this->config['reader.line_ending.detect'] == true) {
-            ini_set('auto_detect_line_endings', 1);
-        }
+        $this->config = $config + $this->config;
         return $this;
     }
 

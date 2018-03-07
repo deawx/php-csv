@@ -20,14 +20,20 @@ class Reader implements \Iterator
     {
         $defaults = [
             'read_column' => true,
+            'column_prefix' => null,
             'accessor' => FileAccessor::class,
             'fields.auto.fill' => true,
         ];
         $this->config = $config + $defaults;
-        $this->accessor = new $this->config['accessor']();
+        $this->accessor = new $this->config['accessor']($this->config);
         $this->accessor
-            ->setConfigures($this->config)
             ->createHandle($value);
+    }
+
+    public function setConfigures(array $config = [])
+    {
+        $this->config = $config + $this->config;
+        return $config;
     }
 
     public function setAccessor(AccessorInterface $accessor)
@@ -64,9 +70,13 @@ class Reader implements \Iterator
             $max = max(count($column), count($values));
             $column = array_merge($column, array_keys(array_fill(0, $max - count($column), null)));
             $values = array_merge($values, array_fill(0, $max - count($values), null));
-
         }
         if ($this->config['read_column'] === true) {
+            if ($this->config['column_prefix'] !== null) {
+                $column = array_map(function($column) {
+                    return $this->config['column_prefix'] . $column;
+                }, $column);
+            }
             $rows = array_combine($column, $values);
         } else {
             $rows = $values;

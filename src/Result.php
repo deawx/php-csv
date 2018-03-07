@@ -14,9 +14,12 @@ class Result implements \Iterator
         $defaults = [
             'output.delimiter' => ',',
             'output.escape' => '\\',
+            'output.enclosure' => '"',
+            'output.apply.enclosure' => true,
             'output.date_with_equals' => false,
             'output.supports.multibyte' => true,
             'output.line_ending.detect' => true,
+            'output.convert_encoding' => true,
             'output.charset.detect' => [
                 'ASCII',
                 'JIS',
@@ -37,13 +40,13 @@ class Result implements \Iterator
     {
         $value = [];
         foreach ($this->rows as $row) {
-            $row = str_replace('"', ($this->config['output.escape'] === null ? '' : $this->config['output.escape']) . '"', $row);
-            if (ctype_digit($row)) {
+            $row = str_replace($this->config['output.enclosure'], ($this->config['output.escape'] === null ? '' : $this->config['output.escape']) . $this->config['output.enclosure'], $row);
+            if ($this->config['output.apply.enclosure'] == false || ctype_digit($row)) {
                 $value[] = $row;
             } elseif (strtotime($row) !== false) {
-                $value[] = ($this->config['output.date_with_equals'] ? '=' : '') . '"' . $row .  '"';
+                $value[] = ($this->config['output.date_with_equals'] ? '=' : '') . $this->config['output.enclosure'] . $row .  $this->config['output.enclosure'];
             } else {
-                $value[] = '"' . $row . '"';
+                $value[] = $this->config['output.enclosure'] . $row . $this->config['output.enclosure'];
             }
         }
         return implode($this->config['output.delimiter'], $value);
@@ -64,6 +67,11 @@ class Result implements \Iterator
     }
 
     public function __get($name)
+    {
+        return $this->get($name);
+    }
+
+    public function get($name)
     {
         return isset($this->rows[$name]) ? $this->rows[$name] : null;
     }

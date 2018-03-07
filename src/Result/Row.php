@@ -10,15 +10,15 @@ class Row
     public function __construct($row, array $config = [])
     {
         $defaults = [
-            'convert_encoding' => true,
         ];
-        $this->value = $row;
         $this->config = $config + $defaults;
+        $this->value = $row;
     }
 
-    public function setConfigures(array $config)
+    public function setConfigures(array $config = [])
     {
-        $this->config = $config;
+        $this->config = $config + $this->config;
+        return $this;
     }
 
     public function setValue($value)
@@ -32,7 +32,7 @@ class Row
         $value = $this->value;
         if (
             $this->config['output.supports.multibyte'] == false ||
-            $this->config['convert_encoding'] == false
+            $this->config['output.convert_encoding'] == false
         ) {
             return $value;
         }
