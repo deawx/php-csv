@@ -79,12 +79,7 @@ trait GeneralCsvMethods
 
     public function readable()
     {
-        $value = fread($this->handle, 1);
-        if (strlen($value) === 0) {
-            return false;
-        }
-        fseek($this->handle, -1, SEEK_CUR);
-        return true;
+        return !feof($this->handle);
     }
 
     public function rewind()
