@@ -8,7 +8,14 @@ machines even need extra configuration, for instance, calling
 Furthermore, developers often struggle with reading CSV files in SJIS-win format
 for the sake of text encoding in Japanese environment.
 
-# Get started
+# Installation
+Run the command below to get started.
+
+```bash
+composer require memory-agape/php-csv
+```
+
+# Quick start
 PHPCsv can be easily used as follows:
 
 ```php
@@ -72,3 +79,33 @@ foreach ($iterator as $key => $rows) {
     var_dump((string) $rows->columnName);
 }
 ```
+
+
+# Supported options
+
+You can set options 2nd parameter to `Reader` class. 
+
+|option name        |types         |default values         |description        |
+|:-------------:|:-------------:|:-------------:|:-------------:|
+|read_column|bool|true||
+|column_prefix|string|null||
+|accessor|string|FileAccessor::class||
+|fields.auto.fill|bool|true||
+|reader.delimiter|string|,||
+|reader.escape|string|\||
+|reader.enclosure|string|"||
+|reader.locale|string|ja-jp||
+|reader.from_encoding|string|SJIS-win||
+|reader.supports.multibyte|bool|true||
+|reader.line_ending.detect|bool|true||
+|reader.encoding.detect|array|['ASCII', 'JIS', 'UTF-8', 'CP51932', 'eucJP-win', 'SJIS-win']||
+|output.delimiter|string|,||
+|output.escape|string|\||
+|output.enclosure|string|"||
+|output.apply.enclosure|bool|true||
+|output.date_with_equals|bool|false||
+|output.supports.multibyte|bool|true||
+|output.line_ending.detect|bool|true||
+|output.convert_encoding|bool|true||
+|output.encoding.detect|array|['ASCII', 'JIS', 'UTF-8', 'CP51932', 'eucJP-win', 'SJIS-win']||
+|output.to_encoding|string|SJIS-win||
